@@ -1,0 +1,59 @@
+id: add_cloudinary_sdk
+learningObjectives:
+  - Understand how to add the Cloudinary SDK to your application
+hints:
+  - "You can find some info here: https://cloudinary.com/documentation/upload_widget"
+  - "You need to the Cloudinary JS files to index.html"
+startFlow:
+  do:
+    - actionId: bot_message
+      params:
+        person: keen
+        messages:
+          - text: "Now that we have our upload preset, we can start and upload some images."
+          - text: "The first step is to add the Cloudinary SDK to your application."
+          - text: "Once you've added the SDK to your application, create a new PR with the changes"
+trigger:
+  type: github_pr_lifecycle_status
+  flowNode:
+    switch:
+      key: "${eventType}"
+      cases:
+        github_pr_opened:
+          do:
+            - actionId: github_pr_comment
+              params:
+                person: keen
+                message: "Hey @${user.githubuser}, thanks for opening this PR! I'll take a look at it shortly."
+        github_pr_workflow_complete_success:
+          if:
+            conditions:
+              - conditionId: github_is_file_modified
+                params:
+                  file: "public/index.html"
+            then:
+              do:
+                - actionId: bot_message
+                  params:
+                    person: keen
+                    messages:
+                      - text: "Nice work! You've successfully integrated Cloudinary with our website."
+                - actionId: finish_step
+            else:
+              do:
+                - actionId: github_pr_comment
+                  params:
+                    person: keen
+                    message: "Looks like it's still missing something. Can you take a look?"
+
+solution:
+  do:
+    - actionId: bot_message
+      params:
+        person: keen
+        messages:
+          - text: "Here's what you need to do in order to complete this step, עם to `public/index.html` and add the following code:"
+          - text: |
+              ```
+              <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+              ```
