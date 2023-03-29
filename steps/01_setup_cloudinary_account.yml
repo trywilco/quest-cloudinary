@@ -15,7 +15,7 @@ startFlow:
           - text: "Greetings, code adventurer! I'm Lucca, and I'm going to help you integrate Cloudinary's file uploader into your application today."
           - text: "Cloudinary is a powerful media management platform that offers seamless file uploading, optimizing, and delivering assets."
           - text: "First, you'll need to sign up for a Cloudinary account if you haven't already. Ready to begin?"
-          - text: "Once you have a Cloudinary account, :instructions[create a cloud name and send it to me.]"
+          - text: "Once you have a Cloudinary account, :instruction[create a cloud name and send it to me.]"
 trigger:
   type: user_message
   params:
