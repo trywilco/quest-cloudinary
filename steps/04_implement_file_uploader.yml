@@ -1,4 +1,4 @@
-id: add_cloudinary_sdk
+id: implement_file_uploader
 learningObjectives:
   - Add cloudinary file uploader widget to your application
 hints:
