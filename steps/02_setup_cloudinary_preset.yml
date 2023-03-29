@@ -14,7 +14,7 @@ startFlow:
           - text: "In order to upload files to Cloudinary, we need to configure an upload preset."
           - text: "An upload preset is a set of configuration options that you can apply to your upload requests."
           - text: "You can create multiple upload presets for different use cases, such as uploading images, videos, or documents."
-          - text: "You should have a upload preset already created for you. Make sure you're using an unsigned one so that we can upload files without an API key."
+          - text: "You should have a upload preset already created for you, :instruction[send it to me]. Make sure you're using an unsigned one so that we can upload files without an API key."
 trigger:
   type: user_message
   params:
@@ -25,7 +25,7 @@ trigger:
         - conditionId: text_match_regex
           params:
             text: "${userMessageText}"
-            regex: ".*[a-zA-Z0-9]{8-15}.*"
+            regex: "^[a-zA-Z0-9]{8,15}$"
       then:
         do:
           - actionId: bot_message
