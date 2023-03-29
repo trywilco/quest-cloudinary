@@ -30,7 +30,7 @@ trigger:
           do:
             - actionId: github_pr_approve
               params:
-                - message: "Amazing, you've added the Cloudinary file uploader widget to our application!\n\nYou can merge your PR now"
+                message: "Amazing, you've added the Cloudinary file uploader widget to our application!\n\nYou can merge your PR now"
         github_pr_workflow_complete_failure:
           do:
             - actionId: github_pr_comment
