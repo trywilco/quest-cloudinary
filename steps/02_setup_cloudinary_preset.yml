@@ -8,7 +8,7 @@ startFlow:
   do:
     - actionId: bot_message
       params:
-        person: lucca
+        person: keen
         messages:
           - text: "Now that you have your Cloudinary cloud name, we need to prepare the API to upload files."
           - text: "In order to upload files to Cloudinary, we need to configure an upload preset."
