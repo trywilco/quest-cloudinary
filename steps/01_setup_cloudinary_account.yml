@@ -26,7 +26,7 @@ trigger:
         - conditionId: text_match_regex
           params:
             text: "${userMessageText}"
-            regex: "[a-zA-Z0-9]{8-15}"
+            regex: "^[a-zA-Z0-9]{8,15}$"
       then:
         do:
           - actionId: bot_message
