@@ -16,7 +16,7 @@ startFlow:
           - text: "Cloudinary is a powerful media management platform that offers seamless file uploading, optimizing, and delivering assets."
           - text: "First, you'll need to sign up for a Cloudinary account if you haven't already. Ready to begin?"
           - text: "Once you have a Cloudinary account, create a cloud name and send it to me."
-
+trigger:
   type: user_message
   params:
     person: keen
