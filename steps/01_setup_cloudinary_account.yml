@@ -35,14 +35,14 @@ trigger:
         - conditionId: is_truthy
           params:
             value: ${outputs.upload_image.status == 200}
-            then:
-      do:
-        - actionId: bot_message
-          params:
-            person: keen
-            messages:
-              - text: "Great! Now that you have your Cloudinary cloud name, let's get started."
-        - actionId: finish_step
+      then:
+        do:
+          - actionId: bot_message
+            params:
+              person: keen
+              messages:
+                - text: "Great! Now that you have your Cloudinary cloud name, let's get started."
+          - actionId: finish_step
       else:
         do:
           - actionId: bot_message
