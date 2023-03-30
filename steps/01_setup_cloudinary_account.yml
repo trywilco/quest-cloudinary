@@ -34,7 +34,7 @@ trigger:
       conditions:
         - conditionId: is_truthy
           params:
-            value: ${outputs.upload_image.status == 200}
+            value: ${outputs.upload_image?.data?.asset_id}
       then:
         do:
           - actionId: bot_message
