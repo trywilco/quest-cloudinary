@@ -15,30 +15,38 @@ startFlow:
           - text: "Greetings, code adventurer! I'm Lucca, and I'm going to help you integrate Cloudinary's file uploader into your application today."
           - text: "Cloudinary is a powerful media management platform that offers seamless file uploading, optimizing, and delivering assets."
           - text: "First, you'll need to sign up for a Cloudinary account if you haven't already. Ready to begin?"
-          - text: "Once you have a Cloudinary account, :instruction[create a cloud name and send it to me.]"
+          - text: "Once you have a Cloudinary account, :instruction[send me your cloud name and preset]"
 trigger:
   type: user_message
   params:
     person: keen
   flowNode:
+    do:
+      - actionId: network_http_request
+        name: upload_image
+        params:
+          url: https://api.cloudinary.com/v1_1/${userMessageText.split(",")[0]}/image/upload
+          method: "POST"
+          data:
+            file: https://picsum.photos/400/300
+            upload_preset: ${userMessageText.split(",")[1]}
     if:
       conditions:
-        - conditionId: text_match_regex
+        - conditionId: is_truthy
           params:
-            text: "${userMessageText}"
-            regex: "^[a-zA-Z0-9]{8,15}$"
-      then:
-        do:
-          - actionId: bot_message
-            params:
-              person: keen
-              messages:
-                - text: "Great! Now that you have your Cloudinary cloud name, let's get started."
-          - actionId: finish_step
-      else:
-        do:
-          - actionId: bot_message
-            params:
-              person: keen
-              messages:
-                - text: "Hmmm, that doesn't look like a valid Cloudinary cloud name. Try again?"
+            value: ${outputs.upload_image.status == 200}
+            then:
+          do:
+            - actionId: bot_message
+              params:
+                person: keen
+                messages:
+                  - text: "Great! Now that you have your Cloudinary cloud name, let's get started."
+            - actionId: finish_step
+          else:
+            do:
+              - actionId: bot_message
+                params:
+                  person: keen
+                  messages:
+                    - text: "Hmmm, that doesn't look like a valid Cloudinary cloud name. Try again?"
