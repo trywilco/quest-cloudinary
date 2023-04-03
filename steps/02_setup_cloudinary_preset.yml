@@ -10,34 +10,58 @@ startFlow:
       params:
         person: keen
         messages:
-          - text: "Now that you have your Cloudinary cloud name, we need to prepare the API to upload files."
-          - text: "In order to upload files to Cloudinary, we need to configure an upload preset."
+          - text: "Now that you have your Cloudinary cloud account, we need to prepare the API to upload files."
+          - text: "In order to upload files to Cloudinary, we need to configure a clound name and upload preset."
+          - text: "You can see your cloud name in the main dashboard: https://console.cloudinary.com/console/"
           - text: "An upload preset is a set of configuration options that you can apply to your upload requests."
           - text: "You can create multiple upload presets for different use cases, such as uploading images, videos, or documents."
-          - text: "You should have a upload preset already created for you, :instruction[send it to me]. Make sure you're using an unsigned one so that we can upload files without an API key."
+          - text: "Once you have everythink ready, :instruction[send me your cloud name and preset in the format: cloud_name,upload_preset]"
 trigger:
   type: user_message
   params:
     person: keen
   flowNode:
-    if:
-      conditions:
-        - conditionId: text_match_regex
-          params:
-            text: "${userMessageText}"
-            regex: "^[a-zA-Z0-9]{8,15}$"
-      then:
-        do:
-          - actionId: bot_message
+    do:
+      if:
+        conditions:
+          - conditionId: is_truthy
             params:
-              person: keen
-              messages:
-                - text: "Sweet, now that we have our upload preset, we can start and upload some images."
-          - actionId: finish_step
-      else:
-        do:
-          - actionId: bot_message
-            params:
-              person: keen
-              messages:
-                - text: "Hmmm, that doesn't look like a valid Cloudinary upload preset name. Try again?"
+              value: ${userMessageText.split(",").length == 2}
+        then:
+          do:
+            - actionId: network_http_request
+              name: upload_image
+              params:
+                url: https://api.cloudinary.com/v1_1/${userMessageText.split(",")[0]}/image/upload
+                method: "POST"
+                data:
+                  file: ${great_success.jpeg}
+                  upload_preset: ${userMessageText.split(",")[1]}
+          if:
+            conditions:
+              - conditionId: is_truthy
+                params:
+                  value: ${outputs.upload_image?.data?.asset_id}
+            then:
+              do:
+                - actionId: bot_message
+                  params:
+                    person: keen
+                    messages:
+                      - text: "Great! Now that we have everything set up, let's move on to the next step."
+                - actionId: finish_step
+            else:
+              do:
+                - actionId: bot_message
+                  params:
+                    person: keen
+                    messages:
+                      - text: "Hmm, something went wrong, I tried to upload a photo to your media library and failed. Make sure you have the correct cloud name and upload preset."
+
+        else:
+          do:
+            - actionId: bot_message
+              params:
+                person: keen
+                messages:
+                  - text: "Send me your cloud name and preset in the format: cloud_name,upload_preset"
