@@ -21,7 +21,6 @@ trigger:
   params:
     person: keen
   flowNode:
-    do:
     if:
       conditions:
         - conditionId: is_user_message_text_ready_to_continue
