@@ -47,7 +47,7 @@ trigger:
                 params:
                   person: keen
                   messages:
-                    - text: "Great! Now that we have everything set up, let's move on to the next step."
+                    - text: "Great! You shuold now see a new image in your media library."
               - actionId: finish_step
           else:
             do:
