@@ -21,47 +21,46 @@ trigger:
   params:
     person: keen
   flowNode:
-    do:
-      if:
-        conditions:
-          - conditionId: is_truthy
+    if:
+      conditions:
+        - conditionId: is_truthy
+          params:
+            value: ${userMessageText.split(",").length == 2}
+      then:
+        do:
+          - actionId: network_http_request
+            name: upload_image
             params:
-              value: ${userMessageText.split(",").length == 2}
-        then:
-          do:
-            - actionId: network_http_request
-              name: upload_image
+              url: https://api.cloudinary.com/v1_1/${userMessageText.split(",")[0]}/image/upload
+              method: "POST"
+              data:
+                file: ${great_success.jpeg}
+                upload_preset: ${userMessageText.split(",")[1]}
+        if:
+          conditions:
+            - conditionId: is_truthy
               params:
-                url: https://api.cloudinary.com/v1_1/${userMessageText.split(",")[0]}/image/upload
-                method: "POST"
-                data:
-                  file: ${great_success.jpeg}
-                  upload_preset: ${userMessageText.split(",")[1]}
-          if:
-            conditions:
-              - conditionId: is_truthy
+                value: ${outputs.upload_image?.data?.asset_id}
+          then:
+            do:
+              - actionId: bot_message
                 params:
-                  value: ${outputs.upload_image?.data?.asset_id}
-            then:
-              do:
-                - actionId: bot_message
-                  params:
-                    person: keen
-                    messages:
-                      - text: "Great! Now that we have everything set up, let's move on to the next step."
-                - actionId: finish_step
-            else:
-              do:
-                - actionId: bot_message
-                  params:
-                    person: keen
-                    messages:
-                      - text: "Hmm, something went wrong, I tried to upload a photo to your media library and failed. Make sure you have the correct cloud name and upload preset."
+                  person: keen
+                  messages:
+                    - text: "Great! Now that we have everything set up, let's move on to the next step."
+              - actionId: finish_step
+          else:
+            do:
+              - actionId: bot_message
+                params:
+                  person: keen
+                  messages:
+                    - text: "Hmm, something went wrong, I tried to upload a photo to your media library and failed. Make sure you have the correct cloud name and upload preset."
 
-        else:
-          do:
-            - actionId: bot_message
-              params:
-                person: keen
-                messages:
-                  - text: "Send me your cloud name and preset in the format: cloud_name,upload_preset"
+      else:
+        do:
+          - actionId: bot_message
+            params:
+              person: keen
+              messages:
+                - text: "Send me your cloud name and preset in the format: cloud_name,upload_preset"
