@@ -4,13 +4,13 @@ subtitle: Uploading and managing media files using Cloudinary API
 description: In this quest, you'll learn how to integrate Cloudinary's file uploading capabilities into your application. You will cover setting up a Cloudinary account, configuring the API, and implementing the file uploader in your application for efficient media file management.
 level: intermediate
 steps:
-- setup_cloudinary_account
-- setup_cloudinary_preset
-- add_cloudinary_sdk
-- implement_file_uploader
+  - setup_cloudinary_account
+  - setup_cloudinary_preset
+  - add_cloudinary_sdk
+  - implement_file_uploader
 duration: 0.5
 skills:
-- frontend
-- operations
-- communication
-repository: 
+  - frontend
+  - operations
+  - communication
+repository: https://github.com/trywilco/Anythink-Market-Public
