@@ -11,9 +11,9 @@ startFlow:
         person: keen
         messages:
           - text: "Looks like we have everything we need to start uploading some images."
-          - text: "Go to the add item page and replace the text input with the Cloudinary file uploader widget."
-          - text: "Two things to keep in mind: :codeInstruction[the upload button that opens the Cloudinary widget should have 'uploader' id] and :codeInstruction[after you finish upload the image, you shuold show it baack in the user's form]."
-          - text: "once you finished, push your changes and instruction[update the PR]"
+          - text: "Go to the 'add item' page and replace the text input with the Cloudinary file uploader widget."
+          - text: "Two things to keep in mind: :codeInstruction[the upload button that opens the Cloudinary widget should have 'uploader' id] and :codeInstruction[after you finish upload the image, you shuold show it back in the user's form]."
+          - text: "once you finished, push your changes and :instruction[update the PR]"
 
 githubActions:
   frontend:
